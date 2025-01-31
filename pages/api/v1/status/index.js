@@ -18,6 +18,7 @@ export default async function status(request, response) {
 
   response.status(200).json({
     updated_at: updatedAt,
+    env: process.env.NODE_ENV,
     dependencies: {
       database: {
         version: dbVersion,
