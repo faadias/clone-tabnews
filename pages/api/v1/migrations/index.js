@@ -7,27 +7,37 @@ export default async function migrations(request, response) {
     return response.status(405).end();
   }
 
-  const dbClient = await database.getNewClient();
+  try {
+    const dbClient = await database.getNewClient();
 
-  let dryRun = true;
-  if (request.method === "POST") {
-    dryRun = false;
+    let dryRun = true;
+    if (request.method === "POST") {
+      dryRun = false;
+    }
+
+    const migrations = await migrationRunner({
+      dbClient,
+      dryRun,
+      dir: join("infra", "migrations"),
+      direction: "up",
+      migrationsTable: "pgmigrations",
+      verbose: true,
+    });
+    await dbClient.end();
+
+    let responseStatus = 200;
+    if (request.method === "POST" && migrations.length > 0) {
+      responseStatus = 201;
+    }
+
+    response.status(responseStatus).json(migrations);
+  } catch (error) {
+    console.error(error);
+    throw error;
+  } finally {
+    try {
+      await dbClient?.end();
+    } finally {
+    }
   }
-
-  const migrations = await migrationRunner({
-    dbClient,
-    dryRun,
-    dir: join("infra", "migrations"),
-    direction: "up",
-    migrationsTable: "pgmigrations",
-    verbose: true,
-  });
-  await dbClient.end();
-
-  let responseStatus = 200;
-  if (request.method === "POST" && migrations.length > 0) {
-    responseStatus = 201;
-  }
-
-  response.status(responseStatus).json(migrations);
 }
