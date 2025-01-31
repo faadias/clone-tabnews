@@ -4,11 +4,14 @@ import { join } from "node:path";
 
 export default async function migrations(request, response) {
   if (!["GET", "POST"].includes(request.method)) {
-    return response.status(405).end();
+    return response.status(405).json({
+      error: `MEthod ${request.method} not allowed`,
+    });
   }
 
+  let dbClient;
   try {
-    const dbClient = await database.getNewClient();
+    dbClient = await database.getNewClient();
 
     let dryRun = true;
     if (request.method === "POST") {
