@@ -13,10 +13,7 @@ export default async function migrations(request, response) {
   try {
     dbClient = await database.getNewClient();
 
-    let dryRun = true;
-    if (request.method === "POST") {
-      dryRun = false;
-    }
+    const dryRun = request.method === "GET";
 
     const migrations = await migrationRunner({
       dbClient,
