@@ -4,10 +4,11 @@
   "description": "Um clone do tabnews.com.br criado do zero para acompanhamento do curso.dev",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run infra:up && npm run mig:up && next dev",
+    "dev": "npm run infra:up && npm run infra:wait-for-postgres && npm run mig:up && next dev",
     "infra:up": "docker compose -f infra/compose.yaml up -d",
     "infra:stop": "docker compose -f infra/compose.yaml stop",
     "infra:down": "docker compose -f infra/compose.yaml down",
+    "infra:wait-for-postgres": "node infra/scripts/wait-for-postgres.js",
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write .",
     "test": "jest --runInBand",
