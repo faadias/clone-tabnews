@@ -11,7 +11,7 @@
     "infra:wait-for-postgres": "node infra/scripts/wait-for-postgres.js",
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write .",
-    "test": "npm run infra:up && concurrently --names next,jest --hide next --kill-others --success command-jest 'next dev' 'jest --runInBand'",
+    "test": "npm run infra:up && npm run infra:wait-for-postgres && concurrently --names next,jest --hide next --kill-others --success command-jest \"next dev\" \"jest --runInBand\"",
     "test:watch": "jest --watchAll --runInBand",
     "mig:create": "node-pg-migrate --migrations-dir infra/migrations create",
     "mig:up": "node-pg-migrate --migrations-dir infra/migrations up --envPath .env.development"
