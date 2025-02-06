@@ -18,7 +18,7 @@ function handleReturn(_error, stdout, _stderr) {
     return;
   }
 
-  console.log("\n\n🟢 PostgreSQL está aceitando conexões!\n");
+  console.log("\n🟢 PostgreSQL está aceitando conexões!\n");
 }
 
 (() => {
