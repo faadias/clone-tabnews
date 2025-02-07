@@ -8,7 +8,7 @@ function checkPostgres() {
   //migrations falha
   exec("docker exec postgres-dev pg_isready --host localhost", handleReturn);
 }
-function handleReturn(_error, stdout, _stderr) {
+function handleReturn(_error, stdout) {
   const postgresIsAcceptingConnections =
     stdout.search("accepting connections") !== -1;
 

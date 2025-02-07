@@ -25,6 +25,8 @@ async function fetchPingPage(bail) {
   }
 }
 
-export default {
+const orchestrator = {
   waitForAllServicesToBeReady,
 };
+
+export default orchestrator;
