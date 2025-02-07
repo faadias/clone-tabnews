@@ -38,6 +38,7 @@ export default async function migrations(request, response) {
     try {
       await dbClient?.end();
     } finally {
+      //do nothing
     }
   }
 }

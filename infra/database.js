@@ -1,10 +1,5 @@
 import { Client } from "pg";
 
-export default {
-  query,
-  getNewClient,
-};
-
 async function getNewClient() {
   const client = new Client({
     host: process.env.POSTGRES_HOST,
@@ -34,6 +29,14 @@ async function query(queryObject) {
     try {
       await client?.end();
     } finally {
+      //do nothing
     }
   }
 }
+
+const database = {
+  query,
+  getNewClient,
+};
+
+export default database;
